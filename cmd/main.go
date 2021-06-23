@@ -20,6 +20,11 @@ func main() {
 		colly.AllowedDomains("boards.fool.com"),
 	)
 
+    // Set error handler
+	c.OnError(func(r *colly.Response, err error) {
+		fmt.Println("Request URL:", r.Request.URL, "failed with response:", r, "\nError:", err)
+	})
+
 	// #tblMessagesAsp > tbody > tr:nth-child(4) > td.first > span > a
 	c.OnHTML("#tblMessagesAsp > tbody > tr", func(e *colly.HTMLElement) {
 		temp := e.ChildTexts("td")
